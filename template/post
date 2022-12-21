@@ -1,0 +1,15 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+awk '$0 !~ /\/\// {print}' main.cpp > main_no_comments.cpp
+g++ main_no_comments.cpp -o main_no_comments.out
+
+res=$?
+
+if [[ $res == 0 ]]; then
+    python ./../common/post.py
+else
+    echo -e "${RED}Did not send result due to compiler errors${NC}"
+fi
