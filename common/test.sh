@@ -69,11 +69,17 @@ if [[ $1 == "" ]]; then
 
 else
     mytest="./tests/test$1.txt"
-    cat "$mytest" | ./main_no_comments.out debug > out.txt
-    echo "see full output in out.txt"
-    
-    echo "--- START ---"
-    cat ./out.txt
-    echo ""
-    echo "---- END ----"
+
+    if [ -f "$mytest" ]; then
+        cat "$mytest" | ./main_no_comments.out debug > out.txt
+        echo "see full output in out.txt"
+        
+        echo "--- START ---"
+        cat ./out.txt
+        echo ""
+        echo "---- END ----"
+    else
+        touch "$mytest"
+        touch "$mytest.expected"
+    fi
 fi
